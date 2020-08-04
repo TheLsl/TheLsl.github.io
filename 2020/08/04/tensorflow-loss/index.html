@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"thelsl.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
   </script>
 
-  <meta name="description" content="1.常用tensorflow的损失函数常用损失函数有类实现和函数实现两种，类实现一般单词首字母大写，函数实现为小写。调用类损失函数需要实例化。CategoricalCrossentropy 和 categorical_crossentropy 都是类别交叉熵损失函数，前者是类的实现形式，后者是函数的实现形式。一般包含以下：[官方链接]https:&#x2F;&#x2F;github.com&#x2F;tensorflow&#x2F;te">
+  <meta name="description" content="1.常用tensorflow的损失函数常用损失函数有类实现和函数实现两种，类实现一般单词首字母大写，函数实现为小写。调用类损失函数需要实例化。CategoricalCrossentropy 和 categorical_crossentropy 都是类别交叉熵损失函数，前者是类的实现形式，后者是函数的实现形式。一般包含以下：官方链接  mean_squared_error（平方差误差损失，用于回归，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tensorflow loss">
 <meta property="og:url" content="http://thelsl.github.io/2020/08/04/tensorflow-loss/index.html">
 <meta property="og:site_name" content="Home">
-<meta property="og:description" content="1.常用tensorflow的损失函数常用损失函数有类实现和函数实现两种，类实现一般单词首字母大写，函数实现为小写。调用类损失函数需要实例化。CategoricalCrossentropy 和 categorical_crossentropy 都是类别交叉熵损失函数，前者是类的实现形式，后者是函数的实现形式。一般包含以下：[官方链接]https:&#x2F;&#x2F;github.com&#x2F;tensorflow&#x2F;te">
+<meta property="og:description" content="1.常用tensorflow的损失函数常用损失函数有类实现和函数实现两种，类实现一般单词首字母大写，函数实现为小写。调用类损失函数需要实例化。CategoricalCrossentropy 和 categorical_crossentropy 都是类别交叉熵损失函数，前者是类的实现形式，后者是函数的实现形式。一般包含以下：官方链接  mean_squared_error（平方差误差损失，用于回归，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-04T01:00:44.739Z">
-<meta property="article:modified_time" content="2020-08-04T04:14:19.995Z">
+<meta property="article:modified_time" content="2020-08-04T04:21:27.102Z">
 <meta property="article:author" content="Liu">
 <meta name="twitter:card" content="summary">
 
@@ -225,7 +225,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-08-04 09:00:44 / 修改时间：12:14:19" itemprop="dateCreated datePublished" datetime="2020-08-04T09:00:44+08:00">2020-08-04</time>
+              <time title="创建时间：2020-08-04 09:00:44 / 修改时间：12:21:27" itemprop="dateCreated datePublished" datetime="2020-08-04T09:00:44+08:00">2020-08-04</time>
             </span>
 
           
@@ -237,7 +237,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="1-常用tensorflow的损失函数"><a href="#1-常用tensorflow的损失函数" class="headerlink" title="1.常用tensorflow的损失函数"></a>1.常用tensorflow的损失函数</h2><p>常用损失函数有类实现和函数实现两种，类实现一般单词首字母大写，函数实现为小写。调用类损失函数需要实例化。CategoricalCrossentropy 和 categorical_crossentropy 都是类别交叉熵损失函数，前者是类的实现形式，后者是函数的实现形式。一般包含以下：<br>[官方链接]<a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorflow/blob/v2.3.0/tensorflow/python/keras/losses.py">https://github.com/tensorflow/tensorflow/blob/v2.3.0/tensorflow/python/keras/losses.py</a></p>
+        <h2 id="1-常用tensorflow的损失函数"><a href="#1-常用tensorflow的损失函数" class="headerlink" title="1.常用tensorflow的损失函数"></a>1.常用tensorflow的损失函数</h2><p>常用损失函数有类实现和函数实现两种，类实现一般单词首字母大写，函数实现为小写。调用类损失函数需要实例化。CategoricalCrossentropy 和 categorical_crossentropy 都是类别交叉熵损失函数，前者是类的实现形式，后者是函数的实现形式。一般包含以下：<br><a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorflow/blob/v2.3.0/tensorflow/python/keras/losses.py">官方链接</a></p>
 <ul>
 <li><p>mean_squared_error（平方差误差损失，用于回归，简写为 mse, 类实现形式为 MeanSquaredError     和 MSE）<br><code>loss = mean(square(y_true - y_pred), axis=-1)</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">y_true = [[<span class="number">0.</span>, <span class="number">1.</span>], [<span class="number">0.</span>, <span class="number">0.</span>]]</span><br><span class="line">  &gt;&gt;&gt; y_pred = [[<span class="number">1.</span>, <span class="number">1.</span>], [<span class="number">1.</span>, <span class="number">0.</span>]]</span><br><span class="line">  &gt;&gt;&gt; <span class="comment"># Using &#x27;auto&#x27;/&#x27;sum_over_batch_size&#x27; reduction type.</span></span><br><span class="line">  &gt;&gt;&gt; mse = tf.keras.losses.MeanSquaredError()</span><br><span class="line">  &gt;&gt;&gt; mse(y_true, y_pred).numpy()</span><br><span class="line">  <span class="number">0.5</span></span><br><span class="line">mse = tf.keras.losses.MeanSquaredError(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.NONE)</span><br><span class="line">  &gt;&gt;&gt; mse(y_true, y_pred).numpy()</span><br><span class="line">  array([<span class="number">0.5</span>, <span class="number">0.5</span>], dtype=float32)</span><br></pre></td></tr></table></figure></li>
