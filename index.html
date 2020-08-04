@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,6 +189,93 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://thelsl.github.io/2020/08/04/tensorflow-loss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home">
+    </span>
+
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/04/tensorflow-loss/" class="post-title-link" itemprop="url">tensorflow loss</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-04 09:00:44" itemprop="dateCreated datePublished" datetime="2020-08-04T09:00:44+08:00">2020-08-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-03 21:36:42" itemprop="dateModified" datetime="2020-08-03T21:36:42+08:00">2020-08-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-常用tensorflow的损失函数"><a href="#1-常用tensorflow的损失函数" class="headerlink" title="1.常用tensorflow的损失函数"></a>1.常用tensorflow的损失函数</h2><p>常用损失函数有类实现和函数实现两种，类实现一般单词首字母大写，函数实现为小写。调用类损失函数需要实例化。CategoricalCrossentropy 和 categorical_crossentropy 都是类别交叉熵损失函数，前者是类的实现形式，后者是函数的实现形式。一般包含以下：</p>
+<ul>
+<li><p>mean_squared_error（平方差误差损失，用于回归，简写为 mse, 类实现形式为 MeanSquaredError     和 MSE）</p>
+</li>
+<li><p>mean_absolute_error (绝对值误差损失,用于回归,简写为 mae, 类实现形式为                      MeanAbsoluteError 和 MAE)</p>
+</li>
+<li><p>mean_absolute_percentage_error (平均百分比误差损失，用于回归，简写为 mape, 类实现形式为 MeanAbsolutePercentageError 和 MAPE)</p>
+</li>
+<li><p>Huber(Huber损失，只有类实现形式，用于回归，介于mse和mae之间，对异常值比较鲁棒，相对mse有一定的优势)</p>
+</li>
+<li><p>binary_crossentropy(二元交叉熵，用于二分类，类实现形式为 BinaryCrossentropy)</p>
+</li>
+<li><p>categorical_crossentropy(类别交叉熵，用于多分类，要求label为onehot编码，类实现形式为 CategoricalCrossentropy)</p>
+</li>
+<li><p>sparse_categorical_crossentropy(稀疏类别交叉熵，用于多分类，要求label为序号编码形式，类实现形式为 SparseCategoricalCrossentropy)</p>
+</li>
+<li><p>hinge(合页损失函数，用于二分类，最著名的应用是作为支持向量机SVM的损失函数，类实现形式为 Hinge)</p>
+</li>
+<li><p>kld(相对熵损失，也叫KL散度，常用于最大期望算法EM的损失函数，两个概率分布差异的一种信息度量。类实现形式为 KLDivergence 或 KLD)</p>
+</li>
+<li><p>cosine_similarity(余弦相似度，可用于多分类，类实现形式为 CosineSimilarity)</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
