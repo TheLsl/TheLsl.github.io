@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -193,6 +193,87 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://thelsl.github.io/2020/08/04/metrics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home">
+    </span>
+
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/04/metrics/" class="post-title-link" itemprop="url">metrics</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-04 14:18:06 / 修改时间：14:31:52" itemprop="dateCreated datePublished" datetime="2020-08-04T14:18:06+08:00">2020-08-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-精确度"><a href="#1-精确度" class="headerlink" title="1. 精确度"></a>1. 精确度</h2><p>Accuracy（准确率）是机器学习中最简单的一种评价模型好坏的指标. <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/95293440">源连接</a></p>
+<h2 id="2-种类"><a href="#2-种类" class="headerlink" title="2. 种类"></a>2. 种类</h2><ul>
+<li><p>accuracy<br><code> tf.keras.metrics.accuracy(y_true, y_pred)</code><br>该accuracy就是大家熟知的最朴素的accuracy。比如我们有6个样本，其真实标签y_true为[0, 1, 3, 3, 4, 2]，但被一个模型预测为了[0, 1, 3, 4, 4, 4]，即y_pred=[0, 1, 3, 4, 4, 4]，那么该模型的accuracy=4/6=66.67%。</p>
+</li>
+<li><p>binary_accuracy<br><code> tf.keras.metrics.binary_accuracy(y_true, y_pred, threshold=0.5)</code><br>binary_accuracy和accuracy最大的不同就是，它适用于2分类的情况。从上图中可以看到binary_accuracy的计算除了y_true和y_pred外，还有一个threshold参数，该参数默认为0.5。比如有6个样本，其y_true为[0, 0, 0, 1, 1, 0]，y_pred为[0.2, 0.3, 0.6, 0.7, 0.8, 0.1]，那么其binary_accuracy=5/6=87.5%。具体计算方法为：1）将y_pred中的每个预测值和threshold对比，大于threshold的设为1，小于等于threshold的设为0，得到y_pred_new=[0, 0, 1, 1, 1, 0]；2）将y_true和y_pred_new代入到2.1中计算得到最终的binary_accuracy=87.5%。</p>
+</li>
+<li><p>categorical_accuracy<br><code> tf.keras.metrics.categorical_accuracy(y_true, y_pred)</code><br>categorical_accuracy和accuracy也很像。不同的是accuracy针对的是y_true和y_pred都为具体标签的情况，而categorical_accuracy针对的是y_true为onehot标签，y_pred为向量的情况。比如有4个样本，其y_true为[[0, 0, 1], [0, 1, 0], [0, 1, 0], [1, 0, 0]]，y_pred为[[0.1, 0.6, 0.3], [0.2, 0.7, 0.1], [0.3, 0.6, 0.1], [0.9, 0, 0.1]]，则其categorical_accuracy为75%。具体计算方法为：1）将y_true转为非onehot的形式，即y_true_new=[2, 1, 1, 0]；2）根据y_pred中的每个样本预测的分数得到y_pred_new=[1, 1, 1, 0]；3）将y_true_new和y_pred_new代入到2.1中计算得到最终的categorical_accuracy=75%。</p>
+</li>
+<li><p>spare_categorical_accuracy<br><code>  tf.keras.metrics.spare_categorical_accuracy(y_true, y_pred)</code><br>和categorical_accuracy功能一样，只是其y_true为非onehot的形式。比如有4个样本，其y_true为[2， 1， 1， 0]，y_pred为[[0.1, 0.6, 0.3], [0.2, 0.7, 0.1], [0.3, 0.6, 0.1], [0.9, 0, 0.1]]，则其categorical_accuracy为75%。具体计算方法为：1）根据y_pred中的每个样本预测的分数得到y_pred_new=[1, 1, 1, 0]；2）将y_true和y_pred_new代入到2.1中计算得到最终的categorical_accuracy=75%。 </p>
+</li>
+<li><p>top_k_categorical_accuracy<br><code> tf.keras.metrics.top_k_categorical_accuracy(y_true, y_pred)</code><br>在categorical_accuracy的基础上加上top_k。categorical_accuracy要求样本在真值类别上的预测分数是在所有类别上预测分数的最大值，才算预测对，而top_k_categorical_accuracy只要求样本在真值类别上的预测分数排在其在所有类别上的预测分数的前k名就行。比如有4个样本，其y_true为[[0, 0, 1], [0, 1, 0], [0, 1, 0], [1, 0, 0]]，y_pred为[[0.3, 0.6, 0.1], [0.5, 0.4, 0.1], [0.3, 0.6, 0.1], [0.9, 0, 0.1]]，根据前面知识我们可以计算得到其categorical_accuracy=50%，但是其top_k_categorical_accuracy是多少呢？答案跟k息息相关。如果k大于或等于3，其top_k_categorical_accuracy毫无疑问是100%，因为总共就3个类别。如果k小于3，那就要计算了，比如k=2，那么top_k_categorical_accuracy=75%。具体计算方法为：1）将y_true转为非onehot的形式，即y_true_new=[2, 1, 1, 0]；2）计算y_pred的top_k的label，比如k=2时，y_pred_new = [[0, 1], [0, 1], [0, 1], [0, 2]]；3）根据每个样本的真实标签是否在预测标签的top_k内来统计准确率，上述4个样本为例，2不在[0, 1]内，1在[0, 1]内，1在[0, 1]内，0在[0, 2]内，4个样本总共预测对了3个，因此k=2时top_k_categorical_accuracy=75%。说明一下，Keras中计算top_k_categorical_accuracy时默认的k值为5。</p>
+</li>
+<li><p>sparse_top_k_categorical_accuracy<br><code> tf.keras.metrics.sparse_top_k_categorical_accuracy(y_true, y_pred)</code><br>和top_k_categorical_accuracy功能一样，只是其y_true为非onehot的形式。比如有4个样本，其y_true为[2， 1， 1， 0]，y_pred为[[0.3, 0.6, 0.1], [0.5, 0.4, 0.1], [0.3, 0.6, 0.1], [0.9, 0, 0.1]]。计算sparse_top_k_categorical_accuracy的步骤如下：1）计算y_pred的top_k的label，比如k=2时，y_pred_new = [[0, 1], [0, 1], [0, 1], [0, 2]]；2）根据每个样本的真实标签是否在预测标签的top_k内来统计准确率，上述4个样本为例，2不在[0, 1]内，1在[0, 1]内，1在[0, 1]内，0在[0, 2]内，4个样本总共预测对了3个，因此k=2时top_k_categorical_accuracy=75%。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>综上，keras中的accuracy metric用法很多，大家可以根据自己的实际情况选择合适的accuracy metric。以下是几个比较常见的用法：</p>
+</li>
+</ul>
+<ol>
+<li><p>当你的标签和预测值都是具体的label index（如y_true=[1, 2, 1], y_pred=[0, 1, 1]）时，用keras.metrics.accuracy。</p>
+</li>
+<li><p>当你的标签是具体的label index，而prediction是向量形式（如y_true=[1, 2, 1], y_pred=[[0.2, 0.3, 0.5], [0.9, 0.1, 0], [0, 0.4, 0.6]]）时，用keras.metrics.sparse_categorical_accuracy。</p>
+</li>
+</ol>
+<p>3）当你的标签是onehot形式，而prediction是向量形式（如y_true=[[0, 1, 0], [0, 0, 1], [0, 1, 0]], y_pred=[[0.2, 0.3, 0.5], [0.9, 0.1, 0], [0, 0.4, 0.6]]）时，用keras.metrics.categorical_accuracy。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://thelsl.github.io/2020/08/04/tensorflow-loss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -220,7 +301,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-08-04 09:00:44 / 修改时间：12:21:27" itemprop="dateCreated datePublished" datetime="2020-08-04T09:00:44+08:00">2020-08-04</time>
+              <time title="创建时间：2020-08-04 09:00:44 / 修改时间：12:26:41" itemprop="dateCreated datePublished" datetime="2020-08-04T09:00:44+08:00">2020-08-04</time>
             </span>
 
           
@@ -235,7 +316,8 @@
           <h2 id="1-常用tensorflow的损失函数"><a href="#1-常用tensorflow的损失函数" class="headerlink" title="1.常用tensorflow的损失函数"></a>1.常用tensorflow的损失函数</h2><p>常用损失函数有类实现和函数实现两种，类实现一般单词首字母大写，函数实现为小写。调用类损失函数需要实例化。CategoricalCrossentropy 和 categorical_crossentropy 都是类别交叉熵损失函数，前者是类的实现形式，后者是函数的实现形式。一般包含以下：<br><a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorflow/blob/v2.3.0/tensorflow/python/keras/losses.py">官方链接</a></p>
 <ul>
 <li><p>mean_squared_error（平方差误差损失，用于回归，简写为 mse, 类实现形式为 MeanSquaredError     和 MSE）<br><code>loss = mean(square(y_true - y_pred), axis=-1)</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">y_true = [[<span class="number">0.</span>, <span class="number">1.</span>], [<span class="number">0.</span>, <span class="number">0.</span>]]</span><br><span class="line">  &gt;&gt;&gt; y_pred = [[<span class="number">1.</span>, <span class="number">1.</span>], [<span class="number">1.</span>, <span class="number">0.</span>]]</span><br><span class="line">  &gt;&gt;&gt; <span class="comment"># Using &#x27;auto&#x27;/&#x27;sum_over_batch_size&#x27; reduction type.</span></span><br><span class="line">  &gt;&gt;&gt; mse = tf.keras.losses.MeanSquaredError()</span><br><span class="line">  &gt;&gt;&gt; mse(y_true, y_pred).numpy()</span><br><span class="line">  <span class="number">0.5</span></span><br><span class="line">mse = tf.keras.losses.MeanSquaredError(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.NONE)</span><br><span class="line">  &gt;&gt;&gt; mse(y_true, y_pred).numpy()</span><br><span class="line">  array([<span class="number">0.5</span>, <span class="number">0.5</span>], dtype=float32)</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">y_true = [[<span class="number">0.</span>, <span class="number">1.</span>], [<span class="number">0.</span>, <span class="number">0.</span>]]</span><br><span class="line">  &gt;&gt;&gt; y_pred = [[<span class="number">1.</span>, <span class="number">1.</span>], [<span class="number">1.</span>, <span class="number">0.</span>]]</span><br><span class="line">  &gt;&gt;&gt; <span class="comment"># Using &#x27;auto&#x27;/&#x27;sum_over_batch_size&#x27; reduction type.</span></span><br><span class="line">  &gt;&gt;&gt; mse = tf.keras.losses.MeanSquaredError()</span><br><span class="line">  &gt;&gt;&gt; mse(y_true, y_pred).numpy()</span><br><span class="line">  <span class="number">0.5</span></span><br><span class="line">mse = tf.keras.losses.MeanSquaredError(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.NONE)</span><br><span class="line">  &gt;&gt;&gt; mse(y_true, y_pred).numpy()</span><br><span class="line">  array([<span class="number">0.5</span>, <span class="number">0.5</span>], dtype=float32)</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>mean_absolute_error (绝对值误差损失,用于回归,简写为 mae, 类实现形式为                      MeanAbsoluteError 和 MAE)</p>
 </li>
 <li><p>mean_absolute_percentage_error (平均百分比误差损失，用于回归，简写为 mape, 类实现形式为 MeanAbsolutePercentageError 和 MAPE)</p>
@@ -247,13 +329,16 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">y_true = [[0, 1], [0, 0]]</span><br><span class="line">y_pred = [[0.6, 0.4], [0.4, 0.6]]</span><br><span class="line">loss = tf.keras.losses.binary_crossentropy(y_true, y_pred)</span><br><span class="line">assert loss.shape == (2,)</span><br><span class="line">loss.numpy()</span><br><span class="line">array([0.916 , 0.714], dtype=float32)</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">y_true = [[0., 1.], [0., 0.]]</span><br><span class="line">y_pred = [[0.6, 0.4], [0.4, 0.6]]</span><br><span class="line"><span class="comment"># Using &#x27;auto&#x27;/&#x27;sum_over_batch_size&#x27; reduction type.</span></span><br><span class="line">bce = tf.keras.losses.BinaryCrossentropy()</span><br><span class="line">bce(y_true, y_pred).numpy()</span><br><span class="line">  0.815</span><br><span class="line">bce = tf.keras.losses.BinaryCrossentropy(</span><br><span class="line">        reduction=tf.keras.losses.Reduction.SUM)</span><br><span class="line">  1.630</span><br><span class="line">bce = tf.keras.losses.BinaryCrossentropy(</span><br><span class="line">      reduction=tf.keras.losses.Reduction.NONE)</span><br><span class="line">  bce(y_true, y_pred).numpy()</span><br><span class="line">  array([0.916 , 0.714], dtype=float32)</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>categorical_crossentropy(类别交叉熵，用于多分类，要求label为onehot编码，类实现形式为 CategoricalCrossentropy)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">y_true = [[0, 1, 0], [0, 0, 1]]</span><br><span class="line">y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</span><br><span class="line">loss = tf.keras.losses.categorical_crossentropy(y_true, y_pred)</span><br><span class="line">assert loss.shape == (2,)</span><br><span class="line">loss.numpy()</span><br><span class="line">array([0.0513, 2.303], dtype=float32)</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">y_true = [[0, 1, 0], [0, 0, 1]]</span><br><span class="line">y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</span><br><span class="line"><span class="comment"># Using &#x27;auto&#x27;/&#x27;sum_over_batch_size&#x27; reduction type.</span></span><br><span class="line">cce = tf.keras.losses.CategoricalCrossentropy()</span><br><span class="line">  &gt;&gt;&gt; cce(y_true, y_pred).numpy()</span><br><span class="line">  1.177</span><br><span class="line">cce = tf.keras.losses.CategoricalCrossentropy(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.SUM)</span><br><span class="line">  &gt;&gt;&gt; cce(y_true, y_pred).numpy()</span><br><span class="line">  2.354</span><br><span class="line">cce = tf.keras.losses.CategoricalCrossentropy(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.NONE)</span><br><span class="line">  &gt;&gt;&gt; cce(y_true, y_pred).numpy()</span><br><span class="line">  array([0.0513, 2.303], dtype=float32)</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">y_true = [[0, 1, 0], [0, 0, 1]]</span><br><span class="line">y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</span><br><span class="line"><span class="comment"># Using &#x27;auto&#x27;/&#x27;sum_over_batch_size&#x27; reduction type.</span></span><br><span class="line">cce = tf.keras.losses.CategoricalCrossentropy()</span><br><span class="line">  &gt;&gt;&gt; cce(y_true, y_pred).numpy()</span><br><span class="line">  1.177</span><br><span class="line">cce = tf.keras.losses.CategoricalCrossentropy(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.SUM)</span><br><span class="line">  &gt;&gt;&gt; cce(y_true, y_pred).numpy()</span><br><span class="line">  2.354</span><br><span class="line">cce = tf.keras.losses.CategoricalCrossentropy(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.NONE)</span><br><span class="line">  &gt;&gt;&gt; cce(y_true, y_pred).numpy()</span><br><span class="line">  array([0.0513, 2.303], dtype=float32)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
 <li><p>sparse_categorical_crossentropy(稀疏类别交叉熵，用于多分类，要求label为序号编码形式，类实现形式为 SparseCategoricalCrossentropy)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">y_true = [1, 2]</span><br><span class="line">y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</span><br><span class="line">loss = tf.keras.losses.sparse_categorical_crossentropy(y_true, y_pred)</span><br><span class="line">assert loss.shape == (2,)</span><br><span class="line">loss.numpy()</span><br><span class="line">array([0.0513, 2.303], dtype=float32)</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> y_true = [1, 2]</span><br><span class="line">y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</span><br><span class="line"><span class="comment"># Using &#x27;auto&#x27;/&#x27;sum_over_batch_size&#x27; reduction type.</span></span><br><span class="line">scce = tf.keras.losses.SparseCategoricalCrossentropy()</span><br><span class="line">scce(y_true, y_pred).numpy()</span><br><span class="line">  1.177</span><br><span class="line">scce = tf.keras.losses.SparseCategoricalCrossentropy(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.SUM)</span><br><span class="line">  &gt;&gt;&gt; scce(y_true, y_pred).numpy()</span><br><span class="line">  2.354</span><br><span class="line">scce = tf.keras.losses.SparseCategoricalCrossentropy(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.NONE)</span><br><span class="line">  &gt;&gt;&gt; scce(y_true, y_pred).numpy()</span><br><span class="line">  array([0.0513, 2.303], dtype=float32)</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> y_true = [1, 2]</span><br><span class="line">y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</span><br><span class="line"><span class="comment"># Using &#x27;auto&#x27;/&#x27;sum_over_batch_size&#x27; reduction type.</span></span><br><span class="line">scce = tf.keras.losses.SparseCategoricalCrossentropy()</span><br><span class="line">scce(y_true, y_pred).numpy()</span><br><span class="line">  1.177</span><br><span class="line">scce = tf.keras.losses.SparseCategoricalCrossentropy(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.SUM)</span><br><span class="line">  &gt;&gt;&gt; scce(y_true, y_pred).numpy()</span><br><span class="line">  2.354</span><br><span class="line">scce = tf.keras.losses.SparseCategoricalCrossentropy(</span><br><span class="line">  ...     reduction=tf.keras.losses.Reduction.NONE)</span><br><span class="line">  &gt;&gt;&gt; scce(y_true, y_pred).numpy()</span><br><span class="line">  array([0.0513, 2.303], dtype=float32)</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>hinge(合页损失函数，用于二分类，最著名的应用是作为支持向量机SVM的损失函数，类实现形式为 Hinge)</p>
 </li>
 <li><p>kld(相对熵损失，也叫KL散度，常用于最大期望算法EM的损失函数，两个概率分布差异的一种信息度量。类实现形式为 KLDivergence 或 KLD)</p>
